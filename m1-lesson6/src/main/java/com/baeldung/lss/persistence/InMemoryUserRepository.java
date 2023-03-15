@@ -3,16 +3,18 @@ package com.baeldung.lss.persistence;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
-
 import com.baeldung.lss.web.model.User;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class InMemoryUserRepository implements UserRepository {
 
     private static AtomicLong counter = new AtomicLong();
 
     private final ConcurrentMap<Long, User> users = new ConcurrentHashMap<Long, User>();
 
-    //
+
 
     @Override
     public Iterable<User> findAll() {
@@ -38,6 +40,11 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public void deleteUser(Long id) {
         this.users.remove(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        this.users.clear();
     }
 
 }
